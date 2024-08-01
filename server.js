@@ -44,17 +44,13 @@ app.get('/collectibles/:item', function(req, res){
 
 //4. Filter Shoes by Query Parameters
 app.get('/shoes', function(req, res){
-  if (req.query['min-price'] && req.query['max-price'] && req.query.type) {
-    const minPrice = req.query['min-price']
-    const maxPrice = req.query['max-price']
-    const shoeType = req.query.type
-    let filteredShoes = data.shoes.filter((shoe) => {
-      return (shoe.price >= minPrice && shoe.price <= maxPrice && shoe.type === shoeType)
-    })
-    res.send(filteredShoes)
-  } else {
-    res.send(data.shoes)
-  }
+  const minPrice = req.query['min-price'] ? req.query['min-price'] : 0
+  const maxPrice = req.query['max-price'] ? req.query['max-price'] : Infinity
+  const shoeType = req.query.type ? req.query.type : ''
+  const filteredShoes = data.shoes.filter((shoe) => {
+    return (shoe.price >= minPrice && shoe.price <= maxPrice && shoe.type.includes(shoeType))
+  })
+  res.send(filteredShoes)
 })
 
 // tell the app to listen on port 3000
