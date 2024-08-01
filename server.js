@@ -57,7 +57,6 @@ app.get('/shoes', function(req, res){
   }
 })
 
-
 // tell the app to listen on port 3000
 
 app.listen(3000, function() {
